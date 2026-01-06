@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace OpenGate
 {
-    public partial class FormSplash : Form
+    public partial class Loading : Form
     {
-        public FormSplash()
+        public Loading()
         {
             InitializeComponent();
         }

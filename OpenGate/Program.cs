@@ -1,4 +1,5 @@
-using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient; // Utilisation du driver SQL Server
+using OpenGate.UC;
 
 namespace OpenGate
 {
@@ -9,37 +10,42 @@ namespace OpenGate
         {
             ApplicationConfiguration.Initialize();
 
-            // 1. Afficher le Splash Screen de manière non-bloquante
-            FormSplash splash = new FormSplash();
+            // 1. Splash screen
+            Loading splash = new Loading();
             splash.Show();
-            splash.Refresh(); // Force l'affichage immédiat du texte
+            splash.Refresh();
 
-            string connectionString = "Data Source=172.26.0.1;Initial Catalog=PTUT;User ID=test;Password=test;Encrypt=False;TrustServerCertificate=False;";
-            SqlConnection dbConnection = new SqlConnection(connectionString);
+            DatabaseConnection db = new DatabaseConnection();
+
+            // 2. On utilise SqlConnection (et non MySqlConnection)
+            SqlConnection conn = db.GetConnection();
 
             try
             {
-                // 2. Tenter l'ouverture de la DB
-                dbConnection.Open();
+                if (conn == null)
+                {
+                    throw new Exception("La configuration de la connexion a échoué (vérifiez vos accès SSMS).");
+                }
 
-                // Petit délai optionnel pour que l'utilisateur voit le message (ex: 1 sec)
-                // System.Threading.Thread.Sleep(1000); 
+                // La connexion est déjà ouverte par ta méthode db.GetConnection()
 
-                // 3. Fermer le splash et lancer le formulaire principal
                 splash.Close();
-                Application.Run(new Form1(dbConnection));
+
+                // On lance l'application
+                Application.Run(new Main());
             }
             catch (Exception ex)
             {
-                splash.Close();
+                if (!splash.IsDisposed) splash.Close();
+
                 MessageBox.Show("Impossible de se connecter à la base de données :\n" + ex.Message,
                                 "Erreur Critique", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                // L'application s'arrêtera ici car Application.Run n'est pas appelé
             }
             finally
             {
-                if (dbConnection.State == System.Data.ConnectionState.Open)
-                    dbConnection.Close();
+                // On ferme proprement si c'est resté ouvert
+                if (conn != null && conn.State == System.Data.ConnectionState.Open)
+                    conn.Close();
             }
         }
     }
