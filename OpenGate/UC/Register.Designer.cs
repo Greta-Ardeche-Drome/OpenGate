@@ -34,9 +34,7 @@
             Lab_Passwd = new Label();
             Lab_Username = new Label();
             Passwd_Conf = new TextBox();
-            StayLogin = new CheckBox();
             But_Register = new Button();
-            AddNewUser = new LinkLabel();
             SuspendLayout();
             // 
             // MainTitle
@@ -93,43 +91,20 @@
             Passwd_Conf.Size = new Size(169, 23);
             Passwd_Conf.TabIndex = 10;
             // 
-            // StayLogin
-            // 
-            StayLogin.AutoSize = true;
-            StayLogin.Location = new Point(132, 152);
-            StayLogin.Name = "StayLogin";
-            StayLogin.Size = new Size(148, 19);
-            StayLogin.TabIndex = 11;
-            StayLogin.Text = "Connecter directement";
-            StayLogin.UseVisualStyleBackColor = true;
-            // 
             // But_Register
             // 
-            But_Register.Location = new Point(74, 177);
+            But_Register.Location = new Point(74, 145);
             But_Register.Name = "But_Register";
             But_Register.Size = new Size(160, 34);
             But_Register.TabIndex = 12;
             But_Register.Text = "Créer utilisateur";
             But_Register.UseVisualStyleBackColor = true;
             // 
-            // AddNewUser
-            // 
-            AddNewUser.AutoSize = true;
-            AddNewUser.Location = new Point(51, 153);
-            AddNewUser.Name = "AddNewUser";
-            AddNewUser.Size = new Size(75, 15);
-            AddNewUser.TabIndex = 13;
-            AddNewUser.TabStop = true;
-            AddNewUser.Text = "Se connecter";
-            AddNewUser.LinkClicked += AddNewUser_LinkClicked;
-            // 
             // Register
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(AddNewUser);
             Controls.Add(But_Register);
-            Controls.Add(StayLogin);
             Controls.Add(Passwd_Conf);
             Controls.Add(Passwd);
             Controls.Add(Username);
@@ -137,7 +112,7 @@
             Controls.Add(Lab_Username);
             Controls.Add(MainTitle);
             Name = "Register";
-            Size = new Size(326, 222);
+            Size = new Size(326, 189);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -150,8 +125,6 @@
         private Label Lab_Passwd;
         private Label Lab_Username;
         private TextBox Passwd_Conf;
-        private CheckBox StayLogin;
         private Button But_Register;
-        private LinkLabel AddNewUser;
     }
 }

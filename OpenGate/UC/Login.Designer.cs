@@ -34,7 +34,6 @@
             Passwd = new TextBox();
             MainTitle = new Label();
             But_Login = new Button();
-            AddNewUser = new LinkLabel();
             StayLogin = new CheckBox();
             SuspendLayout();
             // 
@@ -77,7 +76,7 @@
             // 
             MainTitle.AutoSize = true;
             MainTitle.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            MainTitle.Location = new Point(108, 11);
+            MainTitle.Location = new Point(83, 11);
             MainTitle.Name = "MainTitle";
             MainTitle.Size = new Size(110, 30);
             MainTitle.TabIndex = 4;
@@ -85,28 +84,17 @@
             // 
             // But_Login
             // 
-            But_Login.Location = new Point(72, 141);
+            But_Login.Location = new Point(134, 122);
             But_Login.Name = "But_Login";
             But_Login.Size = new Size(160, 34);
             But_Login.TabIndex = 5;
             But_Login.Text = "Connexion";
             But_Login.UseVisualStyleBackColor = true;
             // 
-            // AddNewUser
-            // 
-            AddNewUser.AutoSize = true;
-            AddNewUser.Location = new Point(21, 119);
-            AddNewUser.Name = "AddNewUser";
-            AddNewUser.Size = new Size(146, 15);
-            AddNewUser.TabIndex = 6;
-            AddNewUser.TabStop = true;
-            AddNewUser.Text = "Créer un nouvel utilisateur";
-            AddNewUser.LinkClicked += AddNewUser_LinkClicked;
-            // 
             // StayLogin
             // 
             StayLogin.AutoSize = true;
-            StayLogin.Location = new Point(173, 118);
+            StayLogin.Location = new Point(14, 129);
             StayLogin.Name = "StayLogin";
             StayLogin.Size = new Size(114, 19);
             StayLogin.TabIndex = 12;
@@ -118,7 +106,6 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(StayLogin);
-            Controls.Add(AddNewUser);
             Controls.Add(But_Login);
             Controls.Add(MainTitle);
             Controls.Add(Passwd);
@@ -126,7 +113,7 @@
             Controls.Add(Lab_Passwd);
             Controls.Add(Lab_Username);
             Name = "Login";
-            Size = new Size(310, 187);
+            Size = new Size(310, 167);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -139,7 +126,6 @@
         private TextBox Passwd;
         private Label MainTitle;
         private Button But_Login;
-        private LinkLabel AddNewUser;
         private CheckBox StayLogin;
     }
 }

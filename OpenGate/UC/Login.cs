@@ -15,13 +15,5 @@ namespace OpenGate.UC
         {
             InitializeComponent();
         }
-
-        private void AddNewUser_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Main maFenetre = (Main)this.FindForm();
-            maFenetre.ClearPanel();
-            maFenetre.Resize_Window("Register");
-            maFenetre.PannelLogin.Controls.Add(new Register());
-        }
     }
 }

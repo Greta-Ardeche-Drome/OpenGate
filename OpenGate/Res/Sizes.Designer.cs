@@ -70,7 +70,7 @@ namespace OpenGate.Res {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 335,226.
+        ///   Recherche une chaîne localisée semblable à 310,187.
         /// </summary>
         internal static string Login {
             get {
