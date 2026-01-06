@@ -47,8 +47,9 @@
             teToolStripMenuItem = new ToolStripMenuItem();
             teToolStripMenuItem1 = new ToolStripMenuItem();
             teToolStripMenuItem2 = new ToolStripMenuItem();
-            folderBrowserDialog1 = new FolderBrowserDialog();
             dToolStripMenuItem = new ToolStripMenuItem();
+            folderBrowserDialog1 = new FolderBrowserDialog();
+            testToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).BeginInit();
             menuStrip1.SuspendLayout();
             panel1.SuspendLayout();
@@ -201,7 +202,7 @@
             // 
             // menuStrip2
             // 
-            menuStrip2.Items.AddRange(new ToolStripItem[] { teToolStripMenuItem, teToolStripMenuItem1, teToolStripMenuItem2, dToolStripMenuItem });
+            menuStrip2.Items.AddRange(new ToolStripItem[] { teToolStripMenuItem, teToolStripMenuItem1, teToolStripMenuItem2, dToolStripMenuItem, testToolStripMenuItem });
             menuStrip2.Location = new Point(0, 0);
             menuStrip2.Name = "menuStrip2";
             menuStrip2.Size = new Size(597, 24);
@@ -234,6 +235,12 @@
             dToolStripMenuItem.Name = "dToolStripMenuItem";
             dToolStripMenuItem.Size = new Size(26, 20);
             dToolStripMenuItem.Text = "d";
+            // 
+            // testToolStripMenuItem
+            // 
+            testToolStripMenuItem.Name = "testToolStripMenuItem";
+            testToolStripMenuItem.Size = new Size(38, 20);
+            testToolStripMenuItem.Text = "test";
             // 
             // Form1
             // 
@@ -286,5 +293,6 @@
         private ToolStripMenuItem teToolStripMenuItem1;
         private ToolStripMenuItem teToolStripMenuItem2;
         private ToolStripMenuItem dToolStripMenuItem;
+        private ToolStripMenuItem testToolStripMenuItem;
     }
 }
