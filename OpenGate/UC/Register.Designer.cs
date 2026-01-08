@@ -41,11 +41,11 @@
             // 
             MainTitle.AutoSize = true;
             MainTitle.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            MainTitle.Location = new Point(93, 10);
+            MainTitle.Location = new Point(74, 9);
             MainTitle.Name = "MainTitle";
-            MainTitle.Size = new Size(110, 30);
+            MainTitle.Size = new Size(174, 30);
             MainTitle.TabIndex = 5;
-            MainTitle.Text = "OpenGate";
+            MainTitle.Text = "Créer un compte";
             // 
             // Passwd
             // 

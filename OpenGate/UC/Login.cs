@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-using Microsoft.Data.SqlClient;
 
 namespace OpenGate.UC
 {
@@ -22,47 +17,81 @@ namespace OpenGate.UC
 
         private void But_Login_Click(object sender, EventArgs e)
         {
-            string username = Username.Text;
+            string username = Username.Text.Trim(); // .Trim() pour éviter les espaces accidentels
             string passwd = Passwd.Text;
 
-            // 1. Utilisation de paramètres pour la sécurité (@user)
-            string sql = "SELECT passwd FROM PTUT.dbo.OGA_Users WHERE username = @user";
-            SqlCommand cmd = new SqlCommand(sql, _conn);
-            cmd.Parameters.AddWithValue("@user", username);
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(passwd))
+            {
+                MessageBox.Show("Veuillez remplir tous les champs.");
+                return;
+            }
 
+            string sql = "SELECT passwd FROM [PTUT].[dbo].[OGA_Users] WHERE username = @user";
+            string token = "none";
             try
             {
                 if (_conn.State != ConnectionState.Open) _conn.Open();
 
-                // 2. On récupère le résultat
-                object result = cmd.ExecuteScalar();
-
-                // 3. On vérifie d'abord si l'utilisateur existe
-                if (result != null)
+                using (SqlCommand cmd = new SqlCommand(sql, _conn))
                 {
-                    string dbHash = result.ToString();
+                    cmd.Parameters.AddWithValue("@user", username);
+                    object result = cmd.ExecuteScalar();
 
-                    // 4. On vérifie le mot de passe seulement si on a un hash
-                    if (Utils.HashUtils.verifyPASSWD(passwd, dbHash))
+                    if (result != null)
                     {
-                        MessageBox.Show("Connexion réussie !");
-                        // Logique de redirection ici
+                        string dbHash = result.ToString();
+
+                        // Vérification du mot de passe avec ton utilitaire BCrypt
+                        if (Utils.HashUtils.verifyPASSWD(passwd, dbHash))
+                        {
+                            // Si "Rester connecté" est coché, on récupère le token
+                            if (StayLogin.Checked)
+                            {
+                                token = SaveUserToken(username);
+                            }
+
+                            // Redirection vers le StartUp de la fenêtre Main
+                            if (this.FindForm() is Main maFenetre)
+                            {
+                                maFenetre.StartUp(token);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("Mot de passe incorrect !");
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Utilisateur ou mot de passe incorrect !");
+                        MessageBox.Show("Utilisateur introuvable !");
                     }
-                }
-                else
-                {
-                    // L'utilisateur n'existe pas dans la base
-                    MessageBox.Show("Utilisateur ou mot de passe incorrect !");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erreur de connexion : " + ex.Message);
             }
+        }
+
+        public string SaveUserToken(string user)
+        {
+            string sqlToken = "SELECT token FROM [PTUT].[dbo].[OGA_Users] WHERE username = @username";
+
+            using (SqlCommand cmdToken = new SqlCommand(sqlToken, _conn))
+            {
+                cmdToken.Parameters.AddWithValue("@username", user);
+                object tokenResult = cmdToken.ExecuteScalar();
+
+                if (tokenResult != null)
+                {
+                    Properties.Settings.Default.UserToken = tokenResult.ToString();
+                    Properties.Settings.Default.Save();
+
+                    return tokenResult.ToString();
+                }
+            }
+
+            return string.Empty;
         }
     }
 }
