@@ -28,25 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label2 = new Label();
+            Lab_SalleNum = new Label();
             pictureBox1 = new PictureBox();
             label1 = new Label();
             Panel_Portes = new FlowLayoutPanel();
-            porte1 = new Porte();
-            porte2 = new Porte();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            Panel_Portes.SuspendLayout();
             SuspendLayout();
             // 
-            // label2
+            // Lab_SalleNum
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 22F);
-            label2.Location = new Point(0, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(135, 41);
-            label2.TabIndex = 1;
-            label2.Text = "Salle 101";
+            Lab_SalleNum.AutoSize = true;
+            Lab_SalleNum.Font = new Font("Segoe UI", 22F);
+            Lab_SalleNum.Location = new Point(0, 0);
+            Lab_SalleNum.Name = "Lab_SalleNum";
+            Lab_SalleNum.Size = new Size(135, 41);
+            Lab_SalleNum.TabIndex = 1;
+            Lab_SalleNum.Text = "Salle 101";
             // 
             // pictureBox1
             // 
@@ -70,27 +67,11 @@
             // 
             // Panel_Portes
             // 
-            Panel_Portes.Controls.Add(porte1);
-            Panel_Portes.Controls.Add(porte2);
             Panel_Portes.Dock = DockStyle.Bottom;
             Panel_Portes.Location = new Point(0, 43);
             Panel_Portes.Name = "Panel_Portes";
-            Panel_Portes.Size = new Size(1248, 106);
+            Panel_Portes.Size = new Size(1234, 106);
             Panel_Portes.TabIndex = 4;
-            // 
-            // porte1
-            // 
-            porte1.Location = new Point(3, 3);
-            porte1.Name = "porte1";
-            porte1.Size = new Size(1242, 48);
-            porte1.TabIndex = 0;
-            // 
-            // porte2
-            // 
-            porte2.Location = new Point(3, 57);
-            porte2.Name = "porte2";
-            porte2.Size = new Size(1242, 48);
-            porte2.TabIndex = 1;
             // 
             // Salle
             // 
@@ -100,22 +81,19 @@
             Controls.Add(Panel_Portes);
             Controls.Add(label1);
             Controls.Add(pictureBox1);
-            Controls.Add(label2);
+            Controls.Add(Lab_SalleNum);
             Name = "Salle";
-            Size = new Size(1248, 149);
+            Size = new Size(1234, 149);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            Panel_Portes.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label label2;
+        private Label Lab_SalleNum;
         private PictureBox pictureBox1;
         private Label label1;
         private FlowLayoutPanel Panel_Portes;
-        private Porte porte1;
-        private Porte porte2;
     }
 }

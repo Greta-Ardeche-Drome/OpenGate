@@ -28,25 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label2 = new Label();
+            Lab_PorteType = new Label();
             But_Open = new Button();
             But_Verouiller = new Button();
             SuspendLayout();
             // 
-            // label2
+            // Lab_PorteType
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 22F);
-            label2.Location = new Point(0, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(188, 41);
-            label2.TabIndex = 2;
-            label2.Text = "Porte unique";
+            Lab_PorteType.AutoSize = true;
+            Lab_PorteType.Font = new Font("Segoe UI", 22F);
+            Lab_PorteType.Location = new Point(0, 0);
+            Lab_PorteType.Name = "Lab_PorteType";
+            Lab_PorteType.Size = new Size(188, 41);
+            Lab_PorteType.TabIndex = 2;
+            Lab_PorteType.Text = "Porte unique";
             // 
             // But_Open
             // 
             But_Open.BackColor = Color.FromArgb(39, 174, 96);
-            But_Open.Location = new Point(876, 3);
+            But_Open.Location = new Point(914, 3);
             But_Open.Name = "But_Open";
             But_Open.Size = new Size(150, 42);
             But_Open.TabIndex = 3;
@@ -57,7 +57,7 @@
             // 
             But_Verouiller.BackColor = Color.FromArgb(192, 57, 43);
             But_Verouiller.ForeColor = SystemColors.Desktop;
-            But_Verouiller.Location = new Point(1032, 3);
+            But_Verouiller.Location = new Point(1070, 3);
             But_Verouiller.Name = "But_Verouiller";
             But_Verouiller.Size = new Size(150, 42);
             But_Verouiller.TabIndex = 4;
@@ -72,16 +72,16 @@
             BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(But_Verouiller);
             Controls.Add(But_Open);
-            Controls.Add(label2);
+            Controls.Add(Lab_PorteType);
             Name = "Porte";
-            Size = new Size(1188, 48);
+            Size = new Size(1223, 48);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label label2;
+        private Label Lab_PorteType;
         private Button But_Open;
         private Button But_Verouiller;
     }

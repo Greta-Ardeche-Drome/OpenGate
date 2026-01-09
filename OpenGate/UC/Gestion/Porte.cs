@@ -10,9 +10,11 @@ namespace OpenGate.UC.Gestion
 {
     public partial class Porte : UserControl
     {
-        public Porte()
+        public Porte(string lettreBat, string salle, string label)
         {
             InitializeComponent();
+
+            Lab_PorteType.Text = "Porte " + label;
         }
     }
 }

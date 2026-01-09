@@ -172,8 +172,7 @@ namespace OpenGate
         private void ManagePage(object sender, EventArgs e)
         {
             PannelMain.Controls.Clear();
-            UC.GestionBat contentUC = new UC.GestionBat();
-            contentUC.Dock = DockStyle.Fill;
+            UC.GestionBat contentUC = new UC.GestionBat(_conn);
             PannelMain.Controls.Add(contentUC);
         }
     }

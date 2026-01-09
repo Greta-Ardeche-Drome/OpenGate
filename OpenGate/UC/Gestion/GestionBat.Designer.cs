@@ -29,58 +29,41 @@
         private void InitializeComponent()
         {
             Panel_BatListe = new FlowLayoutPanel();
-            batiment1 = new OpenGate.UC.Gestion.Batiment();
-            batiment2 = new OpenGate.UC.Gestion.Batiment();
-            batiment4 = new OpenGate.UC.Gestion.Batiment();
-            batiment3 = new OpenGate.UC.Gestion.Batiment();
-            Panel_BatListe.SuspendLayout();
+            Panel_Menu = new Panel();
+            button1 = new Button();
+            Panel_Menu.SuspendLayout();
             SuspendLayout();
             // 
             // Panel_BatListe
             // 
+            Panel_BatListe.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            Panel_BatListe.AutoScroll = true;
             Panel_BatListe.BorderStyle = BorderStyle.FixedSingle;
-            Panel_BatListe.Controls.Add(batiment1);
-            Panel_BatListe.Controls.Add(batiment2);
-            Panel_BatListe.Controls.Add(batiment4);
-            Panel_BatListe.Controls.Add(batiment3);
-            Panel_BatListe.Dock = DockStyle.Fill;
             Panel_BatListe.FlowDirection = FlowDirection.TopDown;
-            Panel_BatListe.Location = new Point(0, 0);
+            Panel_BatListe.Location = new Point(0, 52);
             Panel_BatListe.Name = "Panel_BatListe";
-            Panel_BatListe.Size = new Size(1268, 1454);
+            Panel_BatListe.Size = new Size(1264, 617);
             Panel_BatListe.TabIndex = 0;
             Panel_BatListe.WrapContents = false;
             // 
-            // batiment1
+            // Panel_Menu
             // 
-            batiment1.Location = new Point(3, 3);
-            batiment1.Name = "batiment1";
-            batiment1.Size = new Size(1260, 357);
-            batiment1.TabIndex = 0;
+            Panel_Menu.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            Panel_Menu.Controls.Add(button1);
+            Panel_Menu.Location = new Point(0, 0);
+            Panel_Menu.Name = "Panel_Menu";
+            Panel_Menu.Size = new Size(1264, 52);
+            Panel_Menu.TabIndex = 1;
             // 
-            // batiment2
+            // button1
             // 
-            batiment2.AutoSize = true;
-            batiment2.Location = new Point(3, 366);
-            batiment2.Name = "batiment2";
-            batiment2.Size = new Size(1260, 357);
-            batiment2.TabIndex = 1;
-            // 
-            // batiment4
-            // 
-            batiment4.AutoSize = true;
-            batiment4.Location = new Point(3, 729);
-            batiment4.Name = "batiment4";
-            batiment4.Size = new Size(1260, 357);
-            batiment4.TabIndex = 3;
-            // 
-            // batiment3
-            // 
-            batiment3.AutoSize = true;
-            batiment3.Location = new Point(3, 1092);
-            batiment3.Name = "batiment3";
-            batiment3.Size = new Size(1260, 357);
-            batiment3.TabIndex = 2;
+            button1.Location = new Point(11, 9);
+            button1.Name = "button1";
+            button1.Size = new Size(38, 34);
+            button1.TabIndex = 0;
+            button1.Text = "O";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += Update_Button;
             // 
             // GestionBat
             // 
@@ -88,20 +71,18 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BorderStyle = BorderStyle.FixedSingle;
+            Controls.Add(Panel_Menu);
             Controls.Add(Panel_BatListe);
             Name = "GestionBat";
-            Size = new Size(1268, 1454);
-            Panel_BatListe.ResumeLayout(false);
-            Panel_BatListe.PerformLayout();
+            Size = new Size(1267, 672);
+            Panel_Menu.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private FlowLayoutPanel Panel_BatListe;
-        private Gestion.Batiment batiment1;
-        private Gestion.Batiment batiment2;
-        private Gestion.Batiment batiment3;
-        private Gestion.Batiment batiment4;
+        private Panel Panel_Menu;
+        private Button button1;
     }
 }

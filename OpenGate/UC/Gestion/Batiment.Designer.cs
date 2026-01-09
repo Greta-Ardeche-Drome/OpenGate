@@ -29,30 +29,17 @@
         private void InitializeComponent()
         {
             Panel_BatimentListe = new FlowLayoutPanel();
-            salle2 = new Salle();
             Lab_BatimentNom = new Label();
-            salle1 = new Salle();
-            Panel_BatimentListe.SuspendLayout();
             SuspendLayout();
             // 
             // Panel_BatimentListe
             // 
             Panel_BatimentListe.AutoSize = true;
-            Panel_BatimentListe.Controls.Add(salle2);
-            Panel_BatimentListe.Controls.Add(salle1);
             Panel_BatimentListe.FlowDirection = FlowDirection.TopDown;
             Panel_BatimentListe.Location = new Point(3, 44);
             Panel_BatimentListe.Name = "Panel_BatimentListe";
-            Panel_BatimentListe.Size = new Size(1254, 310);
+            Panel_BatimentListe.Size = new Size(1173, 310);
             Panel_BatimentListe.TabIndex = 0;
-            // 
-            // salle2
-            // 
-            salle2.BorderStyle = BorderStyle.FixedSingle;
-            salle2.Location = new Point(3, 3);
-            salle2.Name = "salle2";
-            salle2.Size = new Size(1248, 149);
-            salle2.TabIndex = 1;
             // 
             // Lab_BatimentNom
             // 
@@ -64,14 +51,6 @@
             Lab_BatimentNom.TabIndex = 2;
             Lab_BatimentNom.Text = "Bâtiment A";
             // 
-            // salle1
-            // 
-            salle1.BorderStyle = BorderStyle.FixedSingle;
-            salle1.Location = new Point(3, 158);
-            salle1.Name = "salle1";
-            salle1.Size = new Size(1248, 149);
-            salle1.TabIndex = 2;
-            // 
             // Batiment
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -80,8 +59,7 @@
             Controls.Add(Lab_BatimentNom);
             Controls.Add(Panel_BatimentListe);
             Name = "Batiment";
-            Size = new Size(1260, 357);
-            Panel_BatimentListe.ResumeLayout(false);
+            Size = new Size(1179, 357);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -90,7 +68,5 @@
 
         private FlowLayoutPanel Panel_BatimentListe;
         private Label Lab_BatimentNom;
-        private Salle salle2;
-        private Salle salle1;
     }
 }

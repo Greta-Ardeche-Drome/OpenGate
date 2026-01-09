@@ -41,6 +41,7 @@
             // 
             MainTitle.AutoSize = true;
             MainTitle.Font = new Font("Segoe UI Semibold", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            MainTitle.ForeColor = Color.White;
             MainTitle.Location = new Point(74, 9);
             MainTitle.Name = "MainTitle";
             MainTitle.Size = new Size(174, 30);
@@ -49,6 +50,9 @@
             // 
             // Passwd
             // 
+            Passwd.BackColor = Color.FromArgb(30, 33, 45);
+            Passwd.BorderStyle = BorderStyle.FixedSingle;
+            Passwd.ForeColor = SystemColors.ButtonFace;
             Passwd.Location = new Point(123, 87);
             Passwd.Name = "Passwd";
             Passwd.PasswordChar = '*';
@@ -58,6 +62,9 @@
             // 
             // Username
             // 
+            Username.BackColor = Color.FromArgb(30, 33, 45);
+            Username.BorderStyle = BorderStyle.FixedSingle;
+            Username.ForeColor = SystemColors.ButtonFace;
             Username.Location = new Point(123, 54);
             Username.Name = "Username";
             Username.PlaceholderText = "Username";
@@ -67,6 +74,7 @@
             // Lab_Passwd
             // 
             Lab_Passwd.AutoSize = true;
+            Lab_Passwd.ForeColor = Color.FromArgb(170, 175, 190);
             Lab_Passwd.Location = new Point(18, 88);
             Lab_Passwd.Name = "Lab_Passwd";
             Lab_Passwd.Size = new Size(77, 15);
@@ -76,6 +84,7 @@
             // Lab_Username
             // 
             Lab_Username.AutoSize = true;
+            Lab_Username.ForeColor = Color.FromArgb(170, 175, 190);
             Lab_Username.Location = new Point(18, 58);
             Lab_Username.Name = "Lab_Username";
             Lab_Username.Size = new Size(99, 15);
@@ -84,6 +93,9 @@
             // 
             // Passwd_Conf
             // 
+            Passwd_Conf.BackColor = Color.FromArgb(30, 33, 45);
+            Passwd_Conf.BorderStyle = BorderStyle.FixedSingle;
+            Passwd_Conf.ForeColor = SystemColors.ButtonFace;
             Passwd_Conf.Location = new Point(123, 116);
             Passwd_Conf.Name = "Passwd_Conf";
             Passwd_Conf.PasswordChar = '*';
@@ -93,18 +105,25 @@
             // 
             // But_Register
             // 
+            But_Register.BackColor = Color.FromArgb(108, 92, 231);
+            But_Register.FlatAppearance.BorderSize = 0;
+            But_Register.FlatAppearance.MouseOverBackColor = Color.FromArgb(120, 105, 240);
+            But_Register.FlatStyle = FlatStyle.Flat;
+            But_Register.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            But_Register.ForeColor = Color.White;
             But_Register.Location = new Point(74, 145);
             But_Register.Name = "But_Register";
             But_Register.Size = new Size(160, 34);
             But_Register.TabIndex = 12;
             But_Register.Text = "Créer utilisateur";
-            But_Register.UseVisualStyleBackColor = true;
+            But_Register.UseVisualStyleBackColor = false;
             But_Register.Click += But_Register_Click;
             // 
             // Register
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(42, 46, 62);
             Controls.Add(But_Register);
             Controls.Add(Passwd_Conf);
             Controls.Add(Passwd);
