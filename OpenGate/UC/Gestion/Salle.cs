@@ -17,21 +17,22 @@ namespace OpenGate.UC.Gestion
             InitializeComponent();
             Lab_SalleNum.Text = "Salle " + salle;
 
-            string query = "select count(position) from [PTUT].[dbo].[OGA_Portes] where batiment = 'A' and numero = '101';";
+            string query = "select count(position) from [PTUT].[dbo].[OGA_Portes] where batiment = '" + lettreBat + "' and numero = '" + salle + "';";
             // la commande nous rend un nombre, on le met dans une var
+
             using (SqlCommand command = new SqlCommand(query, _conn))
             {
                 int nombrePortes = (int)command.ExecuteScalar();
                 if (nombrePortes == 1) 
                 {
-                    UC.Gestion.Porte newPorte = new UC.Gestion.Porte(lettreBat, salle, "Unique");
+                    UC.Gestion.Porte newPorte = new UC.Gestion.Porte(lettreBat, salle, "Unique", _conn);
                     Panel_Portes.Controls.Add(newPorte);
                 } 
                 else 
                 {
-                    foreach (string a in (string[])["Avant", "Arrière"])
+                    foreach (string position in (string[])["AV", "AR"])
                     {
-                        UC.Gestion.Porte newPorte = new UC.Gestion.Porte(lettreBat, salle, a);
+                        UC.Gestion.Porte newPorte = new UC.Gestion.Porte(lettreBat, salle, position, _conn);
                         Panel_Portes.Controls.Add(newPorte);
                     }
                 }

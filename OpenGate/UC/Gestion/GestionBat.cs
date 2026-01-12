@@ -24,6 +24,8 @@ namespace OpenGate.UC
         private void Update_Button(object sender, EventArgs e)
         {
             UpdateList();
+            Panel_BatListe.VerticalScroll.Visible = false;
+            Panel_BatListe.HorizontalScroll.Visible = false;
         }
 
         private void UpdateList()
@@ -46,6 +48,9 @@ namespace OpenGate.UC
                 UC.Gestion.Batiment newBat = new UC.Gestion.Batiment(bat, _conn);
                 Panel_BatListe.Controls.Add(newBat);
             }
+
+            Panel_BatListe.VerticalScroll.Visible = false;
+            Panel_BatListe.HorizontalScroll.Visible = false;
         }
     }
 }

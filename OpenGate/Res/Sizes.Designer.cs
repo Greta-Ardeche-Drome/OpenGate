@@ -61,7 +61,7 @@ namespace OpenGate.Res {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à 1350,720.
+        ///   Recherche une chaîne localisée semblable à 1264, 720.
         /// </summary>
         internal static string Default {
             get {

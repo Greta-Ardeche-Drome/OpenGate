@@ -19,7 +19,7 @@ namespace OpenGate.UC.Gestion
 
             Lab_BatimentNom.Text = "Bâtiment " + lettreBat;
 
-            string query = "select distinct numero from [PTUT].[dbo].[OGA_Portes] where batiment = 'A';";
+            string query = "select distinct numero from [PTUT].[dbo].[OGA_Portes] where batiment = '" + lettreBat + "';";
             List<string> ListeSalles = new List<string>();
 
             using (SqlCommand command = new SqlCommand(query, _conn))
@@ -32,8 +32,9 @@ namespace OpenGate.UC.Gestion
 
             foreach (string salle in ListeSalles)
             {
-                UC.Gestion.Salle newPorte = new UC.Gestion.Salle(lettreBat, salle, _conn);
-                Panel_BatimentListe.Controls.Add(newPorte);
+                UC.Gestion.Salle newSalle = new UC.Gestion.Salle(lettreBat, salle, _conn);
+                newSalle.Padding = new Padding(0, 0, 0, 3);
+                Panel_BatimentListe.Controls.Add(newSalle);
             }
         }
     }

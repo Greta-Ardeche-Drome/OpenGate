@@ -38,11 +38,12 @@
             // 
             Panel_BatListe.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             Panel_BatListe.AutoScroll = true;
+            Panel_BatListe.BackColor = SystemColors.Control;
             Panel_BatListe.BorderStyle = BorderStyle.FixedSingle;
             Panel_BatListe.FlowDirection = FlowDirection.TopDown;
-            Panel_BatListe.Location = new Point(0, 52);
+            Panel_BatListe.Location = new Point(0, 51);
             Panel_BatListe.Name = "Panel_BatListe";
-            Panel_BatListe.Size = new Size(1264, 617);
+            Panel_BatListe.Size = new Size(1247, 572);
             Panel_BatListe.TabIndex = 0;
             Panel_BatListe.WrapContents = false;
             // 
@@ -52,7 +53,7 @@
             Panel_Menu.Controls.Add(button1);
             Panel_Menu.Location = new Point(0, 0);
             Panel_Menu.Name = "Panel_Menu";
-            Panel_Menu.Size = new Size(1264, 52);
+            Panel_Menu.Size = new Size(1247, 52);
             Panel_Menu.TabIndex = 1;
             // 
             // button1
@@ -71,10 +72,11 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BorderStyle = BorderStyle.FixedSingle;
-            Controls.Add(Panel_Menu);
             Controls.Add(Panel_BatListe);
+            Controls.Add(Panel_Menu);
             Name = "GestionBat";
-            Size = new Size(1267, 672);
+            RightToLeft = RightToLeft.Yes;
+            Size = new Size(1248, 622);
             Panel_Menu.ResumeLayout(false);
             ResumeLayout(false);
         }

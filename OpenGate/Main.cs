@@ -174,6 +174,8 @@ namespace OpenGate
             PannelMain.Controls.Clear();
             UC.GestionBat contentUC = new UC.GestionBat(_conn);
             PannelMain.Controls.Add(contentUC);
+            PannelMain.HorizontalScroll.Visible = false;
+            PannelMain.VerticalScroll.Visible = false;
         }
     }
 }

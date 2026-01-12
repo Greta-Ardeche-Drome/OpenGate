@@ -70,7 +70,7 @@
             Panel_Portes.Dock = DockStyle.Bottom;
             Panel_Portes.Location = new Point(0, 43);
             Panel_Portes.Name = "Panel_Portes";
-            Panel_Portes.Size = new Size(1234, 106);
+            Panel_Portes.Size = new Size(1212, 106);
             Panel_Portes.TabIndex = 4;
             // 
             // Salle
@@ -82,8 +82,9 @@
             Controls.Add(label1);
             Controls.Add(pictureBox1);
             Controls.Add(Lab_SalleNum);
+            Margin = new Padding(5);
             Name = "Salle";
-            Size = new Size(1234, 149);
+            Size = new Size(1212, 149);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

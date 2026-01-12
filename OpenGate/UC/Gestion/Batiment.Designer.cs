@@ -38,7 +38,7 @@
             Panel_BatimentListe.FlowDirection = FlowDirection.TopDown;
             Panel_BatimentListe.Location = new Point(3, 44);
             Panel_BatimentListe.Name = "Panel_BatimentListe";
-            Panel_BatimentListe.Size = new Size(1173, 310);
+            Panel_BatimentListe.Size = new Size(1191, 310);
             Panel_BatimentListe.TabIndex = 0;
             // 
             // Lab_BatimentNom
@@ -47,9 +47,9 @@
             Lab_BatimentNom.Font = new Font("Segoe UI", 22F);
             Lab_BatimentNom.Location = new Point(0, 0);
             Lab_BatimentNom.Name = "Lab_BatimentNom";
-            Lab_BatimentNom.Size = new Size(163, 41);
+            Lab_BatimentNom.Size = new Size(162, 41);
             Lab_BatimentNom.TabIndex = 2;
-            Lab_BatimentNom.Text = "Bâtiment A";
+            Lab_BatimentNom.Text = "Bâtiment X";
             // 
             // Batiment
             // 
@@ -59,7 +59,7 @@
             Controls.Add(Lab_BatimentNom);
             Controls.Add(Panel_BatimentListe);
             Name = "Batiment";
-            Size = new Size(1179, 357);
+            Size = new Size(1197, 357);
             ResumeLayout(false);
             PerformLayout();
         }

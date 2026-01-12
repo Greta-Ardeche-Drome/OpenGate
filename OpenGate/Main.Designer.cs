@@ -197,6 +197,7 @@
             Controls.Add(PannelMain);
             Controls.Add(PannelTopBar);
             ForeColor = Color.White;
+            MaximizeBox = false;
             Name = "Main";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Open Gate Admin";
