@@ -28,28 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Lab_PorteType = new Label();
+            Lab_PorteStatus = new Label();
             But_Open = new Button();
             But_Verouiller = new Button();
             Lab_PorteName = new Label();
             SuspendLayout();
             // 
-            // Lab_PorteType
+            // Lab_PorteStatus
             // 
-            Lab_PorteType.AutoSize = true;
-            Lab_PorteType.Font = new Font("Segoe UI", 12F, FontStyle.Italic);
-            Lab_PorteType.Location = new Point(187, 13);
-            Lab_PorteType.Name = "Lab_PorteType";
-            Lab_PorteType.Size = new Size(99, 21);
-            Lab_PorteType.TabIndex = 2;
-            Lab_PorteType.Text = "Porte unique";
+            Lab_PorteStatus.AutoSize = true;
+            Lab_PorteStatus.Font = new Font("Segoe UI", 12F, FontStyle.Italic);
+            Lab_PorteStatus.Location = new Point(187, 13);
+            Lab_PorteStatus.Name = "Lab_PorteStatus";
+            Lab_PorteStatus.Size = new Size(99, 21);
+            Lab_PorteStatus.TabIndex = 2;
+            Lab_PorteStatus.Text = "Porte unique";
             // 
             // But_Open
             // 
             But_Open.BackColor = Color.FromArgb(39, 174, 96);
-            But_Open.Location = new Point(894, 4);
+            But_Open.Location = new Point(1021, 3);
             But_Open.Name = "But_Open";
-            But_Open.Size = new Size(150, 42);
+            But_Open.Size = new Size(75, 42);
             But_Open.TabIndex = 3;
             But_Open.Text = "Ouvrir";
             But_Open.UseVisualStyleBackColor = false;
@@ -58,12 +58,14 @@
             // 
             But_Verouiller.BackColor = Color.FromArgb(192, 57, 43);
             But_Verouiller.ForeColor = SystemColors.Desktop;
-            But_Verouiller.Location = new Point(1050, 4);
+            But_Verouiller.Location = new Point(1102, 3);
             But_Verouiller.Name = "But_Verouiller";
-            But_Verouiller.Size = new Size(150, 42);
+            But_Verouiller.Size = new Size(82, 42);
             But_Verouiller.TabIndex = 4;
+            But_Verouiller.Tag = "Ver";
             But_Verouiller.Text = "Verouiller";
             But_Verouiller.UseVisualStyleBackColor = false;
+            But_Verouiller.Click += But_Verouiller_Click;
             // 
             // Lab_PorteName
             // 
@@ -83,18 +85,18 @@
             Controls.Add(Lab_PorteName);
             Controls.Add(But_Verouiller);
             Controls.Add(But_Open);
-            Controls.Add(Lab_PorteType);
+            Controls.Add(Lab_PorteStatus);
             Name = "Porte";
-            Size = new Size(1203, 48);
+            Size = new Size(1187, 48);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label Lab_PorteType;
+        private Label Lab_PorteStatus;
         private Button But_Open;
-        private Button But_Verouiller;
         private Label Lab_PorteName;
+        public Button But_Verouiller;
     }
 }

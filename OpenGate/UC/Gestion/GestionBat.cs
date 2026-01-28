@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using OpenGate.UC.Gestion;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,9 +14,12 @@ namespace OpenGate.UC
     public partial class GestionBat : UserControl
     {
         SqlConnection _conn;
+        List<Batiment> ListeBatiment = new List<Batiment>();
         public GestionBat(SqlConnection conn)
         {
             InitializeComponent();
+            this.DoubleBuffered = true;
+
             _conn = conn;
 
             UpdateList();
@@ -24,8 +28,6 @@ namespace OpenGate.UC
         private void Update_Button(object sender, EventArgs e)
         {
             UpdateList();
-            Panel_BatListe.VerticalScroll.Visible = false;
-            Panel_BatListe.HorizontalScroll.Visible = false;
         }
 
         private void UpdateList()
@@ -39,18 +41,25 @@ namespace OpenGate.UC
             {
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
-                    while (reader.Read()) { ListeBatiments.Add(reader[0].ToString()); }
+                    while (reader.Read()) { ListeBatiments.Add(reader[0].ToString()!); }
                 }
             }
 
             foreach (string bat in ListeBatiments)
             {
                 UC.Gestion.Batiment newBat = new UC.Gestion.Batiment(bat, _conn);
+                newBat.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
                 Panel_BatListe.Controls.Add(newBat);
+                ListeBatiment.Add(newBat);
             }
+        }
 
-            Panel_BatListe.VerticalScroll.Visible = false;
-            Panel_BatListe.HorizontalScroll.Visible = false;
+        private void ChangingSize(object sender, EventArgs e)
+        {
+            foreach (Batiment b in ListeBatiment)
+            {
+                b.Width = Panel_BatListe.ClientSize.Width - b.Margin.Left - b.Margin.Right;
+            }
         }
     }
 }

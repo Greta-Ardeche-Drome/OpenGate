@@ -32,6 +32,7 @@
             PannelTopBar = new Panel();
             Panel_MenuTop = new FlowLayoutPanel();
             But_Gestion = new Button();
+            button1 = new Button();
             But_Home = new Button();
             PanelProfile = new Panel();
             But_Profile = new Button();
@@ -68,11 +69,13 @@
             // 
             // Panel_MenuTop
             // 
+            Panel_MenuTop.AutoSize = true;
             Panel_MenuTop.BackColor = Color.Transparent;
             Panel_MenuTop.Controls.Add(But_Gestion);
+            Panel_MenuTop.Controls.Add(button1);
             Panel_MenuTop.Location = new Point(62, 6);
             Panel_MenuTop.Name = "Panel_MenuTop";
-            Panel_MenuTop.Size = new Size(996, 45);
+            Panel_MenuTop.Size = new Size(274, 46);
             Panel_MenuTop.TabIndex = 8;
             // 
             // But_Gestion
@@ -85,11 +88,27 @@
             But_Gestion.ForeColor = SystemColors.ButtonFace;
             But_Gestion.Location = new Point(3, 3);
             But_Gestion.Name = "But_Gestion";
-            But_Gestion.Size = new Size(112, 40);
+            But_Gestion.Size = new Size(150, 40);
             But_Gestion.TabIndex = 6;
-            But_Gestion.Text = "Salles";
+            But_Gestion.Text = "Gestion BAT";
             But_Gestion.UseVisualStyleBackColor = false;
             But_Gestion.Click += ManagePage;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.FromArgb(35, 38, 52);
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatAppearance.MouseOverBackColor = Color.FromArgb(52, 152, 219);
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.ForeColor = SystemColors.ButtonFace;
+            button1.Location = new Point(159, 3);
+            button1.Name = "button1";
+            button1.Size = new Size(112, 40);
+            button1.TabIndex = 7;
+            button1.Text = "LDAP";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // But_Home
             // 
@@ -106,6 +125,7 @@
             // 
             // PanelProfile
             // 
+            PanelProfile.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             PanelProfile.Controls.Add(But_Profile);
             PanelProfile.Controls.Add(Label_UserName);
             PanelProfile.Location = new Point(1064, 8);
@@ -119,7 +139,7 @@
             But_Profile.BackgroundImage = Res.Img.images.Logo;
             But_Profile.BackgroundImageLayout = ImageLayout.Zoom;
             But_Profile.FlatAppearance.BorderSize = 0;
-            But_Profile.Location = new Point(136, 1);
+            But_Profile.Location = new Point(137, 1);
             But_Profile.Name = "But_Profile";
             But_Profile.Size = new Size(40, 40);
             But_Profile.TabIndex = 4;
@@ -131,7 +151,7 @@
             Label_UserName.AutoSize = true;
             Label_UserName.Font = new Font("Segoe UI Semibold", 18F, FontStyle.Bold);
             Label_UserName.ForeColor = Color.White;
-            Label_UserName.Location = new Point(-4, 5);
+            Label_UserName.Location = new Point(-3, 5);
             Label_UserName.Name = "Label_UserName";
             Label_UserName.Size = new Size(139, 32);
             Label_UserName.TabIndex = 4;
@@ -202,6 +222,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Open Gate Admin";
             PannelTopBar.ResumeLayout(false);
+            PannelTopBar.PerformLayout();
             Panel_MenuTop.ResumeLayout(false);
             PanelProfile.ResumeLayout(false);
             PanelProfile.PerformLayout();
@@ -223,5 +244,6 @@
         private Button But_Home;
         private Button But_Gestion;
         private FlowLayoutPanel Panel_MenuTop;
+        private Button button1;
     }
 }

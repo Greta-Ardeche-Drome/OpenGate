@@ -4,8 +4,7 @@ using System.Data;
 public class DatabaseConnection
 {
     // Pour SSMS, la chaîne de connexion change de format
-    private string connectionString = @"Server=localhost;Database=ptut;User Id=test;Password=test;TrustServerCertificate=True;";
-
+    private string connectionString = @"Server=SRV-BDD;Database=PTUT;User Id=ptut;Password=ptut;Encrypt=True;TrustServerCertificate=True;";
     public SqlConnection GetConnection() // Retourne un SqlConnection
     {
         SqlConnection connection = null;

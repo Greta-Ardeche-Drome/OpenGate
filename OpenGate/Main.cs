@@ -171,11 +171,28 @@ namespace OpenGate
 
         private void ManagePage(object sender, EventArgs e)
         {
+            SuspendLayout();
             PannelMain.Controls.Clear();
             UC.GestionBat contentUC = new UC.GestionBat(_conn);
+            contentUC.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            contentUC.Dock = DockStyle.Fill;
             PannelMain.Controls.Add(contentUC);
             PannelMain.HorizontalScroll.Visible = false;
             PannelMain.VerticalScroll.Visible = false;
+            ResumeLayout();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SuspendLayout();
+            PannelMain.Controls.Clear();
+            UC.LDAP.GestionLDAP contentUC = new UC.LDAP.GestionLDAP();
+            contentUC.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
+            contentUC.Dock = DockStyle.Fill;
+            PannelMain.Controls.Add(contentUC);
+            PannelMain.HorizontalScroll.Visible = false;
+            PannelMain.VerticalScroll.Visible = false;
+            ResumeLayout();
         }
     }
 }
