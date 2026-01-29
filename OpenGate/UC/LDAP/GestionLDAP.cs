@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
 using System.DirectoryServices.Protocols;
+using System.Drawing.Text;
 
 namespace OpenGate.UC.LDAP
 {
@@ -18,17 +19,32 @@ namespace OpenGate.UC.LDAP
         public GestionLDAP()
         {
             InitializeComponent();
+
+            // État initial : tout désactivé
+            SetControlsEnabled(stateLDAP.Checked);
+            SetBindControlsEnabled(stateCredentials.Checked);
+
+            // Ajouter l’événement
+            stateLDAP.CheckedChanged += (sender, e) =>
+            {
+                SetControlsEnabled(stateLDAP.Checked);
+            };
+
+            stateCredentials.CheckedChanged += (sender, e) =>
+            {
+                SetBindControlsEnabled(stateCredentials.Checked);
+            };
         }
 
         // Modèle de configuration
         private class LdapConfig
         {
-            public string Server { get; set; }
+            public required string Server { get; set; }
             public int Port { get; set; }
-            public string BindDn { get; set; }
-            public string Password { get; set; }
-            public string UserFilter { get; set; }
-            public bool Enabled { get; set; }
+            public string? BindDn { get; set; }
+            public required string BaseDn { get; set; }
+            public string? Password { get; set; }
+            public string? UserFilter { get; set; }
         }
 
         // Lecture UI
@@ -41,12 +57,35 @@ namespace OpenGate.UC.LDAP
                 BindDn = txtDN.Text.Trim(),
                 Password = txtMDP.Text,
                 UserFilter = txtUserFilter.Text.Trim(),
-                Enabled = stateLDAP.Checked
+                BaseDn = txtBaseDN.Text.Trim()
             };
         }
 
+        private void SetControlsEnabled(bool enabled)
+        {
+            // Groupe Connexion LDAP
+            txtServer.Enabled = enabled;
+            txtPort.Enabled = enabled;
+            txtBaseDN.Enabled = enabled;
+
+            // Groupe Bind
+            stateCredentials.Enabled = enabled;
+
+            // Groupe Option
+            txtUserFilter.Enabled = enabled;
+
+            // Boutons
+            btnTest.Enabled = enabled;
+            btnSave.Enabled = enabled;
+        }
+
+        private void SetBindControlsEnabled(bool enabled)
+        {
+            txtDN.Enabled = enabled;
+            txtMDP.Enabled = enabled;
+        }
+
         // Test connexion LDAP
-        // ======================
         private void TestLdap(LdapConfig config)
         {
             var identifier = new LdapDirectoryIdentifier(
@@ -119,11 +158,6 @@ namespace OpenGate.UC.LDAP
                     MessageBoxIcon.Error
                 );
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

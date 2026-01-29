@@ -30,21 +30,24 @@ namespace OpenGate.UC.LDAP
         private void InitializeComponent()
         {
             grpConnection = new GroupBox();
+            SrvDN = new Label();
+            txtBaseDN = new TextBox();
             SrvPort = new Label();
             txtPort = new TextBox();
             txtServer = new TextBox();
             SrvLDAP = new Label();
             grpBind = new GroupBox();
+            stateCredentials = new CheckBox();
             txtMDP = new TextBox();
             BindMDP = new Label();
             txtDN = new TextBox();
             BindDN = new Label();
             grpOption = new GroupBox();
+            txtUserFilter = new TextBox();
+            userFilter = new Label();
+            stateLDAP = new CheckBox();
             btnSave = new Button();
             btnTest = new Button();
-            stateLDAP = new CheckBox();
-            userFilter = new Label();
-            txtUserFilter = new TextBox();
             grpConnection.SuspendLayout();
             grpBind.SuspendLayout();
             grpOption.SuspendLayout();
@@ -52,15 +55,34 @@ namespace OpenGate.UC.LDAP
             // 
             // grpConnection
             // 
+            grpConnection.Controls.Add(SrvDN);
+            grpConnection.Controls.Add(txtBaseDN);
             grpConnection.Controls.Add(SrvPort);
             grpConnection.Controls.Add(txtPort);
             grpConnection.Controls.Add(txtServer);
             grpConnection.Controls.Add(SrvLDAP);
-            grpConnection.Location = new Point(3, 3);
+            grpConnection.Location = new Point(0, 26);
             grpConnection.Name = "grpConnection";
-            grpConnection.Size = new Size(967, 88);
+            grpConnection.Size = new Size(973, 88);
             grpConnection.TabIndex = 1;
             grpConnection.TabStop = false;
+            // 
+            // SrvDN
+            // 
+            SrvDN.AutoSize = true;
+            SrvDN.Location = new Point(427, 19);
+            SrvDN.Name = "SrvDN";
+            SrvDN.Size = new Size(51, 15);
+            SrvDN.TabIndex = 8;
+            SrvDN.Text = "Base DN";
+            // 
+            // txtBaseDN
+            // 
+            txtBaseDN.Location = new Point(428, 37);
+            txtBaseDN.Name = "txtBaseDN";
+            txtBaseDN.PlaceholderText = "DC=domain,DC=local";
+            txtBaseDN.Size = new Size(200, 23);
+            txtBaseDN.TabIndex = 7;
             // 
             // SrvPort
             // 
@@ -75,15 +97,15 @@ namespace OpenGate.UC.LDAP
             // 
             txtPort.Location = new Point(292, 37);
             txtPort.Name = "txtPort";
-            txtPort.Size = new Size(200, 23);
+            txtPort.Size = new Size(39, 23);
             txtPort.TabIndex = 5;
             txtPort.Text = "389";
-            txtPort.TextChanged += textBox1_TextChanged;
             // 
             // txtServer
             // 
             txtServer.Location = new Point(6, 37);
             txtServer.Name = "txtServer";
+            txtServer.PlaceholderText = "srv-ad.domain.local";
             txtServer.Size = new Size(200, 23);
             txtServer.TabIndex = 3;
             // 
@@ -98,19 +120,30 @@ namespace OpenGate.UC.LDAP
             // 
             // grpBind
             // 
+            grpBind.Controls.Add(stateCredentials);
             grpBind.Controls.Add(txtMDP);
             grpBind.Controls.Add(BindMDP);
             grpBind.Controls.Add(txtDN);
             grpBind.Controls.Add(BindDN);
-            grpBind.Location = new Point(3, 123);
+            grpBind.Location = new Point(0, 120);
             grpBind.Name = "grpBind";
-            grpBind.Size = new Size(970, 86);
+            grpBind.Size = new Size(973, 111);
             grpBind.TabIndex = 6;
             grpBind.TabStop = false;
             // 
+            // stateCredentials
+            // 
+            stateCredentials.AutoSize = true;
+            stateCredentials.Location = new Point(6, 15);
+            stateCredentials.Name = "stateCredentials";
+            stateCredentials.Size = new Size(197, 19);
+            stateCredentials.TabIndex = 8;
+            stateCredentials.Text = "Activer le Compte de Connexion";
+            stateCredentials.UseVisualStyleBackColor = true;
+            // 
             // txtMDP
             // 
-            txtMDP.Location = new Point(292, 37);
+            txtMDP.Location = new Point(350, 55);
             txtMDP.Name = "txtMDP";
             txtMDP.Size = new Size(200, 23);
             txtMDP.TabIndex = 5;
@@ -119,7 +152,7 @@ namespace OpenGate.UC.LDAP
             // BindMDP
             // 
             BindMDP.AutoSize = true;
-            BindMDP.Location = new Point(292, 19);
+            BindMDP.Location = new Point(350, 37);
             BindMDP.Name = "BindMDP";
             BindMDP.Size = new Size(77, 15);
             BindMDP.TabIndex = 4;
@@ -127,15 +160,16 @@ namespace OpenGate.UC.LDAP
             // 
             // txtDN
             // 
-            txtDN.Location = new Point(6, 37);
+            txtDN.Location = new Point(6, 55);
             txtDN.Name = "txtDN";
-            txtDN.Size = new Size(200, 23);
+            txtDN.PlaceholderText = "CN=user,OU=users,DC=domain,DC=local";
+            txtDN.Size = new Size(282, 23);
             txtDN.TabIndex = 3;
             // 
             // BindDN
             // 
             BindDN.AutoSize = true;
-            BindDN.Location = new Point(6, 19);
+            BindDN.Location = new Point(6, 37);
             BindDN.Name = "BindDN";
             BindDN.Size = new Size(60, 15);
             BindDN.TabIndex = 2;
@@ -145,16 +179,42 @@ namespace OpenGate.UC.LDAP
             // 
             grpOption.Controls.Add(txtUserFilter);
             grpOption.Controls.Add(userFilter);
-            grpOption.Controls.Add(stateLDAP);
-            grpOption.Location = new Point(1, 229);
+            grpOption.Location = new Point(0, 237);
             grpOption.Name = "grpOption";
-            grpOption.Size = new Size(970, 86);
+            grpOption.Size = new Size(973, 86);
             grpOption.TabIndex = 7;
             grpOption.TabStop = false;
             // 
+            // txtUserFilter
+            // 
+            txtUserFilter.Location = new Point(9, 37);
+            txtUserFilter.Name = "txtUserFilter";
+            txtUserFilter.PlaceholderText = "(&(objectClass=user)(memberOf=CN=NomDuGroupe,OU=Groupes,DC=domain,DC=local))";
+            txtUserFilter.Size = new Size(541, 23);
+            txtUserFilter.TabIndex = 6;
+            // 
+            // userFilter
+            // 
+            userFilter.AutoSize = true;
+            userFilter.Location = new Point(9, 19);
+            userFilter.Name = "userFilter";
+            userFilter.Size = new Size(94, 15);
+            userFilter.TabIndex = 5;
+            userFilter.Text = "Filtre Utilisateurs";
+            // 
+            // stateLDAP
+            // 
+            stateLDAP.AutoSize = true;
+            stateLDAP.Location = new Point(0, 3);
+            stateLDAP.Name = "stateLDAP";
+            stateLDAP.Size = new Size(95, 19);
+            stateLDAP.TabIndex = 0;
+            stateLDAP.Text = "Activer LDAP";
+            stateLDAP.UseVisualStyleBackColor = true;
+            // 
             // btnSave
             // 
-            btnSave.Location = new Point(756, 452);
+            btnSave.Location = new Point(797, 430);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(75, 23);
             btnSave.TabIndex = 1;
@@ -164,39 +224,13 @@ namespace OpenGate.UC.LDAP
             // 
             // btnTest
             // 
-            btnTest.Location = new Point(9, 452);
+            btnTest.Location = new Point(9, 430);
             btnTest.Name = "btnTest";
             btnTest.Size = new Size(124, 23);
             btnTest.TabIndex = 0;
             btnTest.Text = "Tester la connexion";
             btnTest.UseVisualStyleBackColor = true;
             btnTest.Click += btnTest_Click;
-            // 
-            // stateLDAP
-            // 
-            stateLDAP.AutoSize = true;
-            stateLDAP.Location = new Point(57, 40);
-            stateLDAP.Name = "stateLDAP";
-            stateLDAP.Size = new Size(95, 19);
-            stateLDAP.TabIndex = 0;
-            stateLDAP.Text = "Activer LDAP";
-            stateLDAP.UseVisualStyleBackColor = true;
-            // 
-            // userFilter
-            // 
-            userFilter.AutoSize = true;
-            userFilter.Location = new Point(374, 30);
-            userFilter.Name = "userFilter";
-            userFilter.Size = new Size(94, 15);
-            userFilter.TabIndex = 5;
-            userFilter.Text = "Filtre Utilisateurs";
-            // 
-            // txtUserFilter
-            // 
-            txtUserFilter.Location = new Point(374, 48);
-            txtUserFilter.Name = "txtUserFilter";
-            txtUserFilter.Size = new Size(200, 23);
-            txtUserFilter.TabIndex = 6;
             // 
             // GestionLDAP
             // 
@@ -205,6 +239,7 @@ namespace OpenGate.UC.LDAP
             BackColor = Color.FromArgb(35, 38, 52);
             Controls.Add(btnSave);
             Controls.Add(grpOption);
+            Controls.Add(stateLDAP);
             Controls.Add(btnTest);
             Controls.Add(grpBind);
             Controls.Add(grpConnection);
@@ -217,6 +252,7 @@ namespace OpenGate.UC.LDAP
             grpOption.ResumeLayout(false);
             grpOption.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -236,5 +272,8 @@ namespace OpenGate.UC.LDAP
         private TextBox txtUserFilter;
         private Label userFilter;
         private CheckBox stateLDAP;
+        private Label SrvDN;
+        private TextBox txtBaseDN;
+        private CheckBox stateCredentials;
     }
 }
