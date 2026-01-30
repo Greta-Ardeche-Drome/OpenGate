@@ -22,17 +22,11 @@ namespace OpenGate.UC.LDAP
 
             // État initial : tout désactivé
             SetControlsEnabled(stateLDAP.Checked);
-            SetBindControlsEnabled(stateCredentials.Checked);
 
             // Ajouter l’événement
             stateLDAP.CheckedChanged += (sender, e) =>
             {
                 SetControlsEnabled(stateLDAP.Checked);
-            };
-
-            stateCredentials.CheckedChanged += (sender, e) =>
-            {
-                SetBindControlsEnabled(stateCredentials.Checked);
             };
         }
 
@@ -40,7 +34,7 @@ namespace OpenGate.UC.LDAP
         private class LdapConfig
         {
             public required string Server { get; set; }
-            public int Port { get; set; }
+            public required int Port { get; set; }
             public string? BindDn { get; set; }
             public required string BaseDn { get; set; }
             public string? Password { get; set; }
@@ -69,7 +63,8 @@ namespace OpenGate.UC.LDAP
             txtBaseDN.Enabled = enabled;
 
             // Groupe Bind
-            stateCredentials.Enabled = enabled;
+            txtDN.Enabled = enabled;
+            txtMDP.Enabled = enabled;
 
             // Groupe Option
             txtUserFilter.Enabled = enabled;
@@ -77,12 +72,6 @@ namespace OpenGate.UC.LDAP
             // Boutons
             btnTest.Enabled = enabled;
             btnSave.Enabled = enabled;
-        }
-
-        private void SetBindControlsEnabled(bool enabled)
-        {
-            txtDN.Enabled = enabled;
-            txtMDP.Enabled = enabled;
         }
 
         // Test connexion LDAP
@@ -108,18 +97,14 @@ namespace OpenGate.UC.LDAP
             }
 
             connection.Bind();
-            if (!string.IsNullOrWhiteSpace(config.BaseDn))
-            {
-                var request = new SearchRequest(
-                    config.BaseDn,
-                    "(objectClass=*)",   // simple filtre pour vérifier l'existence
-                    SearchScope.Base,
-                    null
-                );
 
-                var response = (SearchResponse)connection.SendRequest(request);
-                // exception si Base DN invalide
-            }
+            var request = new SearchRequest(
+                config.BaseDn,
+                "(objectClass=*)",
+                SearchScope.Base
+            );
+
+            var response = (SearchResponse)connection.SendRequest(request);
         }
 
         // Bouton TEST
