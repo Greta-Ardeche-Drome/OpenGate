@@ -47,6 +47,7 @@ namespace OpenGate.UC.LDAP
             stateLDAP = new CheckBox();
             btnSave = new Button();
             btnTest = new Button();
+            stateSSL = new CheckBox();
             grpConnection.SuspendLayout();
             grpBind.SuspendLayout();
             grpOption.SuspendLayout();
@@ -54,6 +55,7 @@ namespace OpenGate.UC.LDAP
             // 
             // grpConnection
             // 
+            grpConnection.Controls.Add(stateSSL);
             grpConnection.Controls.Add(SrvDN);
             grpConnection.Controls.Add(txtBaseDN);
             grpConnection.Controls.Add(SrvPort);
@@ -220,6 +222,16 @@ namespace OpenGate.UC.LDAP
             btnTest.UseVisualStyleBackColor = true;
             btnTest.Click += btnTest_Click;
             // 
+            // stateSSL
+            // 
+            stateSSL.AutoSize = true;
+            stateSSL.Location = new Point(688, 41);
+            stateSSL.Name = "stateSSL";
+            stateSSL.Size = new Size(44, 19);
+            stateSSL.TabIndex = 9;
+            stateSSL.Text = "SSL";
+            stateSSL.UseVisualStyleBackColor = true;
+            // 
             // GestionLDAP
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -262,5 +274,6 @@ namespace OpenGate.UC.LDAP
         private CheckBox stateLDAP;
         private Label SrvDN;
         private TextBox txtBaseDN;
+        private CheckBox stateSSL;
     }
 }

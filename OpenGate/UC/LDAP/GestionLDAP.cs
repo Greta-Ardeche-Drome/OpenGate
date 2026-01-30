@@ -35,10 +35,11 @@ namespace OpenGate.UC.LDAP
         {
             public required string Server { get; set; }
             public required int Port { get; set; }
-            public string? BindDn { get; set; }
-            public required string BaseDn { get; set; }
-            public string? Password { get; set; }
+            public required string BindDn { get; set; }
+            public string BaseDn { get; set; }
+            public required string Password { get; set; }
             public string? UserFilter { get; set; }
+            public bool UseSSL { get; set; }
         }
 
         // Lecture UI
@@ -50,8 +51,9 @@ namespace OpenGate.UC.LDAP
                 Port = int.Parse(txtPort.Text),
                 BindDn = txtDN.Text.Trim(),
                 Password = txtMDP.Text,
-                UserFilter = txtUserFilter.Text.Trim(),
-                BaseDn = txtBaseDN.Text.Trim()
+                UserFilter = string.IsNullOrWhiteSpace(txtUserFilter.Text) ? "(objectClass=*)" : txtUserFilter.Text.Trim(), // Valeur par défault
+                BaseDn = txtBaseDN.Text.Trim(),
+                UseSSL = stateSSL.Checked
             };
         }
 
@@ -61,6 +63,7 @@ namespace OpenGate.UC.LDAP
             txtServer.Enabled = enabled;
             txtPort.Enabled = enabled;
             txtBaseDN.Enabled = enabled;
+            stateSSL.Enabled = enabled;
 
             // Groupe Bind
             txtDN.Enabled = enabled;
@@ -77,6 +80,9 @@ namespace OpenGate.UC.LDAP
         // Test connexion LDAP
         private void TestLdap(LdapConfig config)
         {
+            if (string.IsNullOrWhiteSpace(config.Server))
+                throw new Exception("Le Server doit être renseigné pour la connexion.");
+
             var identifier = new LdapDirectoryIdentifier(
                 config.Server,
                 config.Port
@@ -84,23 +90,24 @@ namespace OpenGate.UC.LDAP
 
             LdapConnection connection;
 
-            if (!string.IsNullOrWhiteSpace(config.BindDn) && !string.IsNullOrWhiteSpace(config.Password))
+            if (string.IsNullOrWhiteSpace(config.BindDn) || string.IsNullOrWhiteSpace(config.Password))
+                throw new Exception("L'Utilisateur et son MDP doit être renseignés pour la connexion.");
+            
+            var credential = new NetworkCredential(config.BindDn, config.Password);
+            connection = new LdapConnection(identifier, credential);
+
+            // ✅ Activer SSL si demandé
+            if (config.UseSSL)
             {
-                // Utilisation des credentials si fournis
-                var credential = new NetworkCredential(config.BindDn, config.Password);
-                connection = new LdapConnection(identifier, credential);
-            }
-            else
-            {
-                // Connexion anonyme si BindDn et Password vides
-                connection = new LdapConnection(identifier);
+                connection.SessionOptions.SecureSocketLayer = true;
+                connection.SessionOptions.VerifyServerCertificate += (conn, cert) => true; // Accepter tous les certificats
             }
 
             connection.Bind();
 
             var request = new SearchRequest(
                 config.BaseDn,
-                "(objectClass=*)",
+                config.UserFilter,
                 SearchScope.Base
             );
 
