@@ -15,11 +15,11 @@ IPAddress secondaryDNS(0, 0, 0, 0);
 // --- CONFIGURATION MQTT ---
 const char* mqtt_server = "192.168.103.1";
 const int mqtt_port = 1883;
-const char* clientId = "ESP32_D103_Gache";
+const char* clientId = "ESP32_D103_Lecteur";
 const char* mqtt_user = "mqtt_opengate";
 const char* mqtt_password = "OpenGate2607";
-const char* topic_recep = "opengate/raspi/D103/gache";
-const char* topic_envoi = "opengate/esp32/D103/gache";
+const char* topic_recep = "opengate/D103/lecteur/led";
+const char* topic_envoi = "opengate/D103/lecteur";
 
 // --- CONFIGURATION HARDWARE ---
 const int LED_PIN = 7;
@@ -118,7 +118,7 @@ void loop() {
 
   if (digitalRead(BTN_PIN) == LOW) {
     Serial.println("[DEBUG] Bouton pressé !");
-    client.publish(topic_envoi, "PRESSED");
+    client.publish(topic_envoi, "X");
     delay(1000);
   }
 }
