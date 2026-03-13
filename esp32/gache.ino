@@ -22,6 +22,7 @@ const char* topic_recep = "opengate/D103/gache";
 
 // --- CONFIGURATION HARDWARE ---
 const int RELAY_PIN = 7;
+const int LED_DENIED_PIN = 5;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -83,13 +84,26 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("\n[MQTT] Trame reçue sur ["); Serial.print(topic); Serial.print("] -> Payload : "); Serial.println(message);
 
   if (message == "OUVRIR") {
-    Serial.println("[ACTION] >> Déclenchement de la gâche");
+    Serial.println("[ACTION] >> Autorisation validée. Déclenchement de la gâche");
     digitalWrite(RELAY_PIN, HIGH);
-    
     delay(3000);
-    
     digitalWrite(RELAY_PIN, LOW);
     Serial.println("[ACTION] << Fin de temporisation, gâche verrouillée");
+  } 
+  else if (message == "NON") {
+    Serial.println("[ACTION] >> Accès refusé. Allumage de la LED d'erreur");
+    digitalWrite(LED_DENIED_PIN, HIGH);
+    delay(3000);
+    digitalWrite(LED_DENIED_PIN, LOW);
+    Serial.println("[ACTION] << Extinction de la LED d'erreur");
+  }
+  else {
+    Serial.println("[ALERTE] Paybv  
+    
+    
+    
+    
+      load inconnu ignoré par sécurité.");
   }
 }
 
@@ -99,6 +113,9 @@ void setup() {
 
   pinMode(RELAY_PIN, OUTPUT);
   digitalWrite(RELAY_PIN, LOW);
+  
+  pinMode(LED_DENIED_PIN, OUTPUT);
+  digitalWrite(LED_DENIED_PIN, LOW);
 
   setup_wifi();
   client.setServer(mqtt_server, mqtt_port);
