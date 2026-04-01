@@ -68,6 +68,7 @@
             Username.PlaceholderText = "Username";
             Username.Size = new Size(169, 23);
             Username.TabIndex = 2;
+            Username.KeyDown += Username_KeyDown;
             // 
             // Passwd
             // 
@@ -80,6 +81,7 @@
             Passwd.PlaceholderText = "Password";
             Passwd.Size = new Size(169, 23);
             Passwd.TabIndex = 3;
+            Passwd.KeyDown += Passwd_KeyDown;
             // 
             // MainTitle
             // 
@@ -147,7 +149,6 @@
             Controls.Add(Lab_Username);
             Name = "Login";
             Size = new Size(306, 217);
-            Load += Login_Load;
             ResumeLayout(false);
             PerformLayout();
         }

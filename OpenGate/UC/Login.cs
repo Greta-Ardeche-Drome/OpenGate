@@ -72,12 +72,21 @@ namespace OpenGate.UC
             }
         }
 
-
-        private void Login_Load(object sender, EventArgs e)
+        private void Passwd_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.KeyCode == Keys.Enter)
+            {
+                But_Login_Click(sender, e);
+            }
         }
 
+        private void Username_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                But_Login_Click(sender, e);
+            }
+        }
     }
 
     public class LDAPlogin

@@ -49,11 +49,10 @@ namespace OpenGate.UC
 
             try
             {
-                string token = Utils.HashUtils.HashTOKEN(Username.Text, Passwd.Text);
                 string hashedpasswd = Utils.HashUtils.HashPASSWD(Passwd.Text);
 
                 // 3. Utilisation de paramètres pour l'INSERT
-                string sql_res = "INSERT INTO PTUT.dbo.OGA_Users (username, passwd, token) VALUES (@user, @pass, @token)";
+                string sql_res = "INSERT INTO PTUT.dbo.OGA_Users (username, passwd) VALUES (@user, @pass)";
 
                 if (_conn.State != ConnectionState.Open) _conn.Open();
 
@@ -61,7 +60,6 @@ namespace OpenGate.UC
                 {
                     cmd.Parameters.AddWithValue("@user", Username.Text);
                     cmd.Parameters.AddWithValue("@pass", hashedpasswd);
-                    cmd.Parameters.AddWithValue("@token", token);
 
                     cmd.ExecuteNonQuery();
                 }
