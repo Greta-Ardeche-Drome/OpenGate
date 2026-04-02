@@ -16,10 +16,5 @@ namespace OpenGate.Utils
         {
             return BCrypt.Net.BCrypt.Verify(passwd, hashedpasswd);
         }
-
-        public static string HashTOKEN(string name, string passwd)
-        {
-            return BCrypt.Net.BCrypt.HashPassword(name + "|" + passwd);
-        }
     }
 }
