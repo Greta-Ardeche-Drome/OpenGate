@@ -2,10 +2,35 @@
 #include <PubSubClient.h>
 #include <SPI.h>
 #include <Adafruit_PN532.h>
+#include <Keypad.h>
+#include <WiFiClientSecure.h>
 
 // --- CONFIGURATION LAN ---
 const char* ssid = "OpenGate-D103";
 const char* password = "OpenGate2607";
+
+const char* ca_cert = \
+"-----BEGIN CERTIFICATE-----\n" \
+"MIIDazCCAlOgAwIBAgIUAJL2+gA5Cqa7OpnK9CwH9FUEUF8wDQYJKoZIhvcNAQEL\n" \
+"BQAwRTELMAkGA1UEBhMCRlIxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoM\n" \
+"GEludGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAeFw0yNjAzMTUxMjE0MDhaFw0yNzAz\n" \
+"MTUxMjE0MDhaMEUxCzAJBgNVBAYTAkZSMRMwEQYDVQQIDApTb21lLVN0YXRlMSEw\n" \
+"HwYDVQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwggEiMA0GCSqGSIb3DQEB\n" \
+"AQUAA4IBDwAwggEKAoIBAQDWVyAyl95puLKaVTc4j1r9ZVR/X30F3D2MZVSQmbJP\n" \
+"AgGbMSHjF+IPo6JuudL3fR5qhW/Ztid2/RZcyWrBTRGaj652vZHLdVusgOYUsFFe\n" \
+"v8nDij97HMZ8qWPJA9ucM97kb9dTk175t2Smw+hZiCIDOl/9+9nYHQR3cF2qUHp5\n" \
+"bZPnRbqtoRRFwgdA6lLgR3yx450cTUSaPDiunxGhgBifzwtJum1KK7UhSMpvoQRX\n" \
+"UxesllEFvuIjb8OHw/YrNvCmyvII/7Gg2PpipXfZCDbSm8bNbO+YkiMOfz3jCGz0\n" \
+"JsiDhoKqdu0oQJ4UltCRY4AO6cVqHmTjDN9csUW7nZmvAgMBAAGjUzBRMB0GA1Ud\n" \
+"DgQWBBRdKIsO5XzWB24/o8Y+K8vdezO9hjAfBgNVHSMEGDAWgBRdKIsO5XzWB24/\n" \
+"o8Y+K8vdezO9hjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQCt\n" \
+"D6e2hFwAP4H3P37vHuQSneVxiLHCeQB/mjHVTW/x8fmbSSb9AEtWcxOESAFpc5WR\n" \
+"YIzSNcsV8gF82/00LPXxQ5ElTxu0yW8szLQD05toOQRRr/ZcZOjtc7tuTnawbnsV\n" \
+"V+CE8fEMWu9HrHlvYsTLTObXYCDWLQfi62D8AqPzw95Xu/JrfUtGx81R/E7V4H3q\n" \
+"vY6XiYIMc9Q+p1lOE0ouxyRzFW8rMsvtZRkrWWkjonf2u59cPZ+8//hTOsYJKbXe\n" \
+"3rsHE6NKI3Pt1aUlxxXJFq8nOS7rIS1gcDkcetQ0hpsZtHxcmEFw1cy/cvheIjPx\n" \
+"xlGGktL+imRP14M9PZ+g\n" \
+"-----END CERTIFICATE-----\n";
 
 // --- CONFIGURATION IP STATIQUE ---
 IPAddress local_IP(192, 168, 103, 10);
@@ -14,27 +39,50 @@ IPAddress subnet(255, 255, 255, 0);
 IPAddress primaryDNS(0, 0, 0, 0);
 IPAddress secondaryDNS(0, 0, 0, 0);
 
-// --- CONFIGURATION MQTT ---
+// --- CONFIGURATION MQTT & LOGIQUE ---
 const char* mqtt_server = "192.168.103.1";
-const int mqtt_port = 1883;
+const int mqtt_port = 8883;
 const char* clientId = "ESP32_D103_Lecteur";
 const char* mqtt_user = "mqtt_opengate";
 const char* mqtt_password = "OpenGate2607";
 const char* topic_recep = "opengate/D103/lecteur/led";
 const char* topic_envoi = "opengate/D103/lecteur";
+const String id_salle = "D103"; 
 
 // --- CONFIGURATION HARDWARE ---
-const int LED_PIN = 8; // Déplacé sur le Pin 8 (le Pin 7 est réservé au SS du SPI)
+const int LED_PIN = 2; 
 
-// --- CONFIGURATION BUS SPI (ESP32-C3 SuperMini) ---
+// --- CONFIGURATION BUS SPI (PN532) ---
 #define PN532_SCK  4
-#define PN532_MISO 5
-#define PN532_MOSI 6
-#define PN532_SS   7
+#define PN532_MISO 3
+#define PN532_MOSI 1
+#define PN532_SS   0
 
 Adafruit_PN532 nfc(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS);
 
-WiFiClient espClient;
+// --- CONFIGURATION CLAVIER MATRICIEL ---
+const byte ROWS = 4; 
+const byte COLS = 4; 
+
+char keys[ROWS][COLS] = {
+  {'E','0','.','V'},
+  {'1','2','3','v'},
+  {'7','8','9','<'},
+  {'4','5','6','^'}
+};
+
+byte rowPins[ROWS] = {5, 6, 7, 8}; 
+byte colPins[COLS] = {9, 10, 20, 21}; 
+
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+// --- VARIABLES DE DOUBLE AUTHENTIFICATION ---
+String currentUID = "";
+String currentPIN = "";
+bool waitingForPIN = false;
+unsigned long timeBadgeScanned = 0;
+
+WiFiClientSecure espClient;
 PubSubClient client(espClient);
 
 // ----------------- FONCTIONS -----------------
@@ -62,15 +110,12 @@ void setup_wifi() {
   
   Serial.println("\n[SUCCES] Couche liaison établie. Wi-Fi connecté.");
   Serial.print("[DEBUG] IP locale attribuée : "); Serial.println(WiFi.localIP());
-  Serial.print("[DEBUG] Masque sous-réseau : "); Serial.println(WiFi.subnetMask());
-  Serial.print("[DEBUG] Passerelle de routage : "); Serial.println(WiFi.gatewayIP());
-  Serial.print("[DEBUG] Puissance du signal radio (RSSI) : "); Serial.print(WiFi.RSSI()); Serial.println(" dBm");
 }
 
 void reconnect() {
   while (!client.connected()) {
     Serial.println("\n[DEBUG] Établissement de la socket TCP vers le broker MQTT en cours...");
-    
+    espClient.setCACert(ca_cert);
     if (client.connect(clientId, mqtt_user, mqtt_password)) {
       Serial.println("[SUCCES] Handshake MQTT validé avec Mosquitto !");
       client.subscribe(topic_recep);
@@ -94,18 +139,23 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (message == "OUVRIR") {
     Serial.println("[ACTION] >> Autorisation validée par le serveur. Allumage de la LED d'état (Accès accordé).");
     digitalWrite(LED_PIN, HIGH);
-    
-    delay(3000); // Maintien de l'affichage visuel pendant la temporisation de la porte
-    
+    delay(3000); 
     digitalWrite(LED_PIN, LOW);
     Serial.println("[ACTION] << Fin de temporisation, extinction de la LED.");
   }
 }
 
+void resetAuthentication() {
+  waitingForPIN = false;
+  currentUID = "";
+  currentPIN = "";
+  Serial.println("[SYSTEME] Session d'authentification réinitialisée.");
+}
+
 // ----------------- SETUP -----------------
 void setup() {
   Serial.begin(115200);
-  Serial.println("\n[SYSTEME] Démarrage de la séquence d'amorçage de la passerelle d'acquisition RFID...");
+  Serial.println("\n[SYSTEME] Démarrage de la séquence d'amorçage de la passerelle d'acquisition RFID + PIN...");
 
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
@@ -115,20 +165,18 @@ void setup() {
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
 
-  // Initialisation matérielle du bus SPI
   SPI.begin(PN532_SCK, PN532_MISO, PN532_MOSI, PN532_SS);
   nfc.begin();
 
   uint32_t versiondata = nfc.getFirmwareVersion();
   if (!versiondata) {
     Serial.println("[ERREUR MATERIELLE] Communication impossible avec la puce PN532.");
-    Serial.println("[SOLUTION] Contrôlez le câblage MISO/MOSI et la position du Dip Switch (0 1) sur la platine rouge.");
-    while (1); // Halt système
+    while (1);
   }
 
   Serial.println("[SUCCES] Puce RFID PN532 interfacée sur le bus SPI.");
-  nfc.SAMConfig(); // Configuration de la puce pour l'acquisition de cartes
-  Serial.println("[SYSTEME] Séquence d'amorçage terminée. Prêt pour l'acquisition série.");
+  nfc.SAMConfig(); 
+  Serial.println("[SYSTEME] Séquence d'amorçage terminée. Prêt pour l'acquisition MFA.");
 }
 
 // ----------------- LOOP -----------------
@@ -136,38 +184,79 @@ void loop() {
   if (!client.connected()) {
     reconnect();
   }
-  client.loop(); // Maintien indispensable du tunnel TCP et traitement des callbacks
+  client.loop(); 
 
-  uint8_t success;
-  uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };
-  uint8_t uidLength;
-
-  // Lecture RFID non-bloquante avec timeout de 100ms
-  // Crucial pour ne pas geler la fonction client.loop() de MQTT
-  success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength, 100);
+  // --- GESTION DU CLAVIER ---
+  char key = keypad.getKey();
   
-  if (success) {
-    Serial.println("\n[RFID] Interruption matérielle : Badge détecté dans le champ magnétique !");
-    Serial.print("[RFID] Extraction de la charge utile. Longueur : "); Serial.print(uidLength, DEC); Serial.println(" octets");
-    
-    String uidString = "";
-    for (uint8_t i = 0; i < uidLength; i++) {
-      // Formatage de chaque octet en hexadécimal majuscule
-      if (uid[i] < 0x10) uidString += "0"; // Ajout du zéro initial si nécessaire
-      uidString += String(uid[i], HEX);
+  if (key && waitingForPIN) {
+    if (key == 'V') { // Flèche d'entrée (en bas à droite) : VALIDER
+      if (currentPIN.length() == 4) {
+        Serial.println("\n[AUTH] Validation du code PIN. Construction de la trame...");
+        
+        // Format d'envoi strict : UID|SALLE|MDP
+        String payload = currentUID + "|" + currentPIN + "|" + id_salle;
+        
+        Serial.print("[MQTT] Injection du payload : "); Serial.println(payload);
+        client.publish(topic_envoi, payload.c_str());
+        Serial.println("[SUCCES] Trame d'authentification complète expédiée.");
+        
+        resetAuthentication();
+      } else {
+        Serial.println("\n[ERREUR] Le code PIN doit obligatoirement faire 4 caractères.");
+        currentPIN = ""; // On vide pour forcer à recommencer
+      }
+      
+    } else if (key == 'E') { // Touche ESC : ANNULER
+      Serial.println("\n[AUTH] Saisie annulée par l'utilisateur (ESC).");
+      resetAuthentication();
+      
+    } else if (key == '<') { // Flèche gauche : EFFACER UN CHIFFRE
+      if (currentPIN.length() > 0) {
+        currentPIN.remove(currentPIN.length() - 1);
+        Serial.print("\b \b"); // Efface l'étoile sur la console
+      }
+      
+    } else if (key != '^' && key != 'v' && key != '.') { 
+      // On ignore les flèches haut/bas et le point, on ne garde que les chiffres
+      if (currentPIN.length() < 4) {
+        currentPIN += key;
+        Serial.print("*"); // Masquage de la saisie
+      }
     }
+  }
+
+  // --- GESTION DU LECTEUR RFID ---
+  if (!waitingForPIN) {
+    uint8_t success;
+    uint8_t uid[] = { 0, 0, 0, 0, 0, 0, 0 };
+    uint8_t uidLength;
+
+    success = nfc.readPassiveTargetID(PN532_MIFARE_ISO14443A, uid, &uidLength, 100);
     
-    uidString.toUpperCase(); // Uniformisation de la chaîne pour la BDD
-    
-    Serial.print("[DATA] UID numérisé : "); Serial.println(uidString);
-    Serial.print("[MQTT] Injection du payload sur le topic ["); Serial.print(topic_envoi); Serial.println("]...");
-    
-    // Publication de la chaîne hexadécimale vers le serveur
-    client.publish(topic_envoi, uidString.c_str());
-    
-    Serial.println("[SUCCES] Trame expédiée sur le réseau local.");
-    
-    // Temporisation de sécurité pour éviter le flood réseau (Replay accidentel du même badge)
-    delay(2000); 
+    if (success) {
+      Serial.println("\n[RFID] Badge détecté. Extraction de l'UID...");
+      
+      String uidString = "";
+      for (uint8_t i = 0; i < uidLength; i++) {
+        if (uid[i] < 0x10) uidString += "0";
+        uidString += String(uid[i], HEX);
+      }
+      uidString.toUpperCase();
+      
+      Serial.print("[DATA] UID numérisé : "); Serial.println(uidString);
+      
+      currentUID = uidString;
+      waitingForPIN = true;
+      timeBadgeScanned = millis();
+      
+      Serial.println("[SYSTEME] Attente de la saisie du code PIN (4 chiffres) puis validation avec 'A'...");
+      delay(500); 
+    }
+  } else {
+    if (millis() - timeBadgeScanned > 10000) {
+      Serial.println("\n[SYSTEME] Timeout de la session d'authentification (10s écoulées).");
+      resetAuthentication();
+    }
   }
 }
