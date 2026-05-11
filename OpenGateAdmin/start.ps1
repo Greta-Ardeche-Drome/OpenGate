@@ -1,0 +1,1 @@
+& C:\Users\Iutuser\Desktop\SourceCode\OpenGate\OpenGateAdmin\.venv\Scripts\python.exe C:\Users\Iutuser\Desktop\SourceCode\OpenGate\OpenGateAdmin\main.py
