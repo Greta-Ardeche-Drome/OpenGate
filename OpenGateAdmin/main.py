@@ -1,10 +1,8 @@
-import paho.mqtt.client as mqtt
 import uvicorn
 from fastapi import Depends, FastAPI, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from paho.mqtt.enums import CallbackAPIVersion
 
 from api.auth import auth_router
 from api.batiment import bat_router
@@ -12,18 +10,25 @@ from api.ldap import ldap_router
 from config import default_message
 from core.dependecies import Check_Token
 
-mqtt_client = mqtt.Client(CallbackAPIVersion.VERSION2, client_id="ADMIN_PANEL")
-mqtt_client.username_pw_set("mqtt_opengate", "OpenGate2607")
-mqtt_client.tls_set(ca_certs="C:/OpenGateAdmin/ca_certificates/caBDD.crt")
-mqtt_client.connect("raspi-D103.opengate.local", 8883, keepalive=60)
-mqtt_client.loop_start()
+dev = True
 
 app = FastAPI()
-app.state.mqtt = mqtt_client
 app.include_router(auth_router)
 app.include_router(ldap_router)
 app.include_router(bat_router)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+if not dev:
+    import paho.mqtt.client as mqtt
+    from paho.mqtt.enums import CallbackAPIVersion
+
+    mqtt_client = mqtt.Client(CallbackAPIVersion.VERSION2, client_id="ADMIN_PANEL")
+    mqtt_client.username_pw_set("mqtt_opengate", "OpenGate2607")
+    mqtt_client.tls_set(ca_certs="C:/OpenGateAdmin/ca_certificates/caBDD.crt")
+    mqtt_client.connect("raspi-D103.opengate.local", 8883, keepalive=60)
+    mqtt_client.loop_start()
+    app.state.mqtt = mqtt_client
+
 
 templates = Jinja2Templates(directory="templates")
 
@@ -88,4 +93,11 @@ async def logout():
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,
+        ssl_keyfile="C:\\OpenGateAdmin\\key.pem",
+        ssl_certfile="C:\\OpenGateAdmin\\cert.pem",
+    )
