@@ -1,0 +1,159 @@
+.panel-content {
+    overflow-y: auto;
+    min-height: 0;
+    flex: 1;
+}
+
+.bat-list-div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.bat-div {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 0;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    width: calc(50% - 0.5rem);
+}
+
+.bat-head {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+}
+
+.salle-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin: 0.5rem;
+}
+
+.salle-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+}
+
+.salle-title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.05em;
+    flex: 1;
+}
+
+.portes {
+    display: flex;
+    flex-direction: column;
+}
+
+.porte-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.porte-row:last-child {
+    border-bottom: none;
+}
+
+.porte-name {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+.porte-status {
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.status-locked {
+    background: var(--accent-dim);
+    color: var(--accent);
+}
+
+.status-unlocked {
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+}
+
+.status-open {
+    background: var(--danger-dim);
+    color: var(--danger);
+}
+
+.btn {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-light);
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color var(--transition), background var(--transition), border-color var(--transition);
+}
+
+.btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-overlay);
+}
+
+.btn-lock {
+    border-color: var(--danger);
+    color: var(--danger);
+    background: var(--danger-dim);
+}
+
+.btn-lock:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+.btn-unlock {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+}
+
+.btn-unlock:hover {
+    background: var(--accent);
+    color: var(--bg-base);
+}
+
+.porte-occupied {
+    font-size: 0.65rem;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+}
+
+.porte-occupied.open {
+    background: var(--danger-dim);
+    color: var(--danger);
+}

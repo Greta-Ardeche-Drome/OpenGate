@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}ACL — OpenGate{% endblock %}
+{% block page_title %}Gestion des authorisations d'accès{% endblock %}
+
+{% block content %}
+<button id="saveBtn">Save</button>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/acl.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        await initPage();
+    });
+</script>
+{% endblock %}

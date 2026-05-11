@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}LDAP — OpenGate{% endblock %}
+{% block page_title %}Gestion des paramètres LDAP{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="/static/css/ldap.css" />
+{% endblock %}
+{% block content %}
+<div class="LDAP-Form">
+    <div class="header">
+    
+    </div>
+    <div class="content">   
+        <div class="content-item">
+            <span for="domain" class="sub-title">Domaine</span>
+            <input type='text' id="domain" placeholder="example.net">
+        </div>
+        <div class="content-item">
+            <span for="server" class="sub-title">Serveur</span>
+            <input type='text' id="server" placeholder="SRV-Name.example.net">
+        </div>
+        <div class="content-item">
+            <span for="port" class="sub-title">Port</span>
+            <input type='number' id="port" placeholder="Port LDAP" value="636">
+        </div>
+        <div class="content-item">
+            <span class="sub-title">Filtre</span>
+            <textarea id="filtre" rows="3" placeholder="(&(objectClass=user)(memberOf=CN=Groupe,OU=Groupes,DC=example,DC=net))"></textarea>
+        </div>
+        <button id="saveBtn">Save</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/ldap.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', async () => {
+        await initPage();
+    });
+</script>
+{% endblock %}

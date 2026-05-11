@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr" style="background-color:#0c0c0d">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Connexion — Cardinal</title>
+
+  <link rel="stylesheet" href="/static/css/global.css" />
+  <link rel="stylesheet" href="/static/css/login.css" />
+</head>
+<body>
+
+<main class="login-page">
+
+  <!-- ══════════════════════════════════════
+       Panneau gauche — décoratif
+  ══════════════════════════════════════ -->
+  <aside class="login-panel-left" aria-hidden="true">
+    <div class="panel-grid"></div>
+    <div class="panel-glow"></div>
+
+    <!-- Brand -->
+    <div class="panel-brand">
+      <div class="brand-mark">
+        <div class="brand-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+        <span class="brand-name">Open Gate</span>
+      </div>
+    </div>
+
+    <!-- Quote + credentials -->
+    <div class="panel-quote">
+      <blockquote>
+        Moins d'acier<br/>
+        <em>plus d'accès</em>
+      </blockquote>
+
+      <div class="credentials-list">
+        <div class="credential-item">
+          <span class="cred-label label">Theo BLACHERE</span>
+          <div class="cred-row">
+            <span class="cred-user">Développeur</span>
+          </div>
+        </div>
+        <div class="credential-item">
+          <span class="cred-label label">Joris Mandon</span>
+          <div class="cred-row">
+            <span class="cred-user">Commercial /  Chargé de communication</span>
+          </div>
+        </div>
+        <div class="credential-item">
+          <span class="cred-label label">Sacha RENARD</span>
+          <div class="cred-row">
+            <span class="cred-user">Responsable réseau</span>
+          </div>
+        </div>
+        <div class="credential-item">
+          <span class="cred-label label">Axel VIDAUD</span>
+          <div class="cred-row">
+            <span class="cred-user">Chef de projet</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       Panneau droit — formulaire
+  ══════════════════════════════════════ -->
+  <section class="login-panel-right">
+    <div class="login-form-wrapper">
+
+      <!-- En-tête -->
+      <header class="login-header">
+        <div class="step-label label">
+          <span class="step-dot"></span>
+          Accès administrateur
+        </div>
+        <h1 class="login-title">Open Gate.</h1>
+        <p class="login-sub">Interface d'administration d'Open Gate.</p>
+        <p class="login-sub">Accès restreint.</p>
+      </header>
+
+      <!-- Formulaire -->
+      <form id="loginForm" class="login-form" novalidate>
+
+        <!-- Username -->
+        <div class="form-field">
+          <label class="field-label" for="username">Identifiant</label>
+          <div class="field-input-wrap">
+            <input
+              id="username"
+              class="form-input"
+              type="text"
+              placeholder="username"
+              autocomplete="username"
+              spellcheck="false"
+              autocapitalize="none"
+            />
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </div>
+          <span id="usernameError" class="field-error" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span></span>
+          </span>
+        </div>
+
+        <!-- Mot de passe -->
+        <div class="form-field">
+          <label class="field-label" for="password">Mot de passe</label>
+          <div class="field-input-wrap">
+            <input
+              id="password"
+              class="form-input"
+              type="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+            />
+            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <button
+              id="pwToggle"
+              type="button"
+              class="pw-toggle"
+              aria-label="Afficher le mot de passe"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                   fill="none" stroke="currentColor" stroke-width="2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </button>
+          </div>
+          <span id="pwError" class="field-error" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span></span>
+          </span>
+        </div>
+
+        <!-- Auth server -->
+        <div class="form-field">
+            <label class="field-label" for="authServer">Serveur d'authentification</label>
+            <div class="field-input-wrap">
+                <select id="authServer" name="authServer" class="form-input form-select">
+                    <option value="ldap">LDAP</option>
+                    <option value="bdd">BDD</option>
+                </select>
+                <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"/>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Submit -->
+        <button id="submitBtn" type="submit" class="btn-submit">
+          <span class="btn-text">Connexion</span>
+          <span class="btn-loader">
+            <span class="spinner"></span>
+          </span>
+        </button>
+
+      </form>
+
+      <!-- Footer -->
+      <footer class="login-footer">
+        Accès restreint — administration uniquement.
+      </footer>
+
+    </div>
+  </section>
+
+</main>
+
+<script src="/static/js/login.js"></script>
+</body>
+</html>

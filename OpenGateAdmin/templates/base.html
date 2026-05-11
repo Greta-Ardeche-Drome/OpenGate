@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{% block title %}OpenGate{% endblock %}</title>
+        <link rel="stylesheet" href="/static/css/toast.css" />
+        <link rel="stylesheet" href="/static/css/global.css" />
+        <link rel="stylesheet" href="/static/css/panel.css" />
+        {% block head %}{% endblock %}
+    </head>
+    <body class="panel-layout" style="opacity:0">
+
+    <!-- ══════════════════════════════════════
+        Sidebar
+    ══════════════════════════════════════ -->
+    <aside class="sidebar" id="sidebar">
+
+        <!-- Brand -->
+        <div class="sidebar-brand">
+            <div class="brand-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+            </div>
+            <span class="brand-name"><a href="/">OpenGate</a></span>
+        </div>
+
+        <!-- Nav -->
+        <nav class="sidebar-nav" id="sidebarNav">
+
+            <!-- Principal -->
+            <div class="nav-section-label">Principal</div>
+
+            <a href="/home" class="nav-item {% if active == 'home' %}active{% endif %}">
+                <span class="nav-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                        <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+                    </svg>
+                </span>
+                <span class="nav-item-label">Tableau de bord</span>
+            </a>
+
+            <a href="/batiments" class="nav-item {% if active == 'batiments' %}active{% endif %}">
+                <span class="nav-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="7" width="20" height="15" rx="1"/>
+                        <path d="M16 22V12H8v10"/>
+                        <path d="M6 7V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+                    </svg>
+                </span>
+                <span class="nav-item-label">Bâtiments</span>
+            </a>
+
+            <a href="/acl" class="nav-item {% if active == 'acl' %}active{% endif %}">
+                <span class="nav-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </span>
+                <span class="nav-item-label">Matrice ACL</span>
+            </a>
+
+            <!-- Configuration -->
+            <div class="nav-section-label">Configuration</div>
+
+            <a href="/ldap" class="nav-item {% if active == 'ldap' %}active{% endif %}">
+                <span class="nav-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </span>
+                <span class="nav-item-label">LDAP / AD</span>
+            </a>
+
+            <!-- Supervision -->
+            <div class="nav-section-label">Supervision</div>
+
+            <a href="/logs" class="nav-item {% if active == 'logs' %}active{% endif %}">
+                <span class="nav-item-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"/>
+                        <line x1="8" y1="12" x2="21" y2="12"/>
+                        <line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/>
+                        <line x1="3" y1="12" x2="3.01" y2="12"/>
+                        <line x1="3" y1="18" x2="3.01" y2="18"/>
+                    </svg>
+                </span>
+                <span class="nav-item-label">Logs & Accès</span>
+                {% if logs_badge %}<span class="nav-badge">{{ logs_badge }}</span>{% endif %}
+            </a>
+
+        </nav>
+
+        <!-- User footer -->
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="user-avatar">{{ current_user[0] | upper }}</div>
+                <div class="user-info">
+                    <span class="user-name">{{ current_user }}</span>
+                    <span class="user-role label">Administrateur</span>
+                </div>
+            </div>
+            <a href="/logout" class="logout-btn" title="Déconnexion">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <polyline points="16 17 21 12 16 7"/>
+                    <line x1="21" y1="12" x2="9" y2="12"/>
+                </svg>
+            </a>
+        </div>
+
+    </aside>
+
+    <!-- ══════════════════════════════════════
+        Main
+    ══════════════════════════════════════ -->
+    <div class="panel-main">
+
+        <!-- Topbar -->
+        <header class="panel-topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+                    </svg>
+                </button>
+                <div class="topbar-breadcrumb">
+                    <span class="breadcrumb-root label">OpenGate</span>
+                    <span class="breadcrumb-sep">/</span>
+                    <span class="breadcrumb-current">{% block page_title %}{% endblock %}</span>
+                </div>
+            </div>
+
+            <div class="topbar-right">
+                <button class="btn-submit btn-light-mode" id="themeToggle" type="button">
+                    <span class="btn-text">Mode clair</span>
+                </button>
+                <div class="status-pill">
+                    <span class="status-dot online"></span>
+                    <span class="label">{{ db_host | default('SRV-BDD.opengate.net') }}</span>
+                </div>
+                <div class="topbar-clock" id="topbarClock">--:--:--</div>
+            </div>
+        </header>
+
+        <!-- Page content -->
+        <main class="panel-content">
+            {% block content %}{% endblock %}
+        </main>
+
+    </div>
+
+    <script>
+        const saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', saved);
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+    <script src="/static/js/toast.js"></script>
+    <script src="/static/js/global.js"></script>
+    <script src="/static/js/panel.js"></script>
+    {% block scripts %}{% endblock %}
+    <div id="toast-container" aria-live="polite" aria-atomic="false"></div>
+    </body>
+</html>
